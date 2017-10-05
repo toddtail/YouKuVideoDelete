@@ -9,19 +9,29 @@ xls_rows = xls_table.max_row
 
 def run():
 
-    url = 'https://openapi.youku.com/v2/videos/destroy.json'
+    url_del = 'https://openapi.youku.com/v2/videos/destroy.json'
 
-    # replace your private parameter below(client_id / access_token)
-    payloads = {'client_id':'99989a******dd0b','access_token':'6253aa*******7bdc905c9ff','video_id':'str'}
-    delete_videos(xls_rows,url,payloads)
+    # replace your private parameter youku openapi client_id below, ignore the cideo_id
+    payloads_del = {
+        'client_id':'9**********0b',
+        'access_token': '',
+        'video_id':'str'
+        }
+
+    delete_videos(xls_rows,url_del,payloads_del)
 
 
-def delete_videos(rows,url,payloads):
-    
+def delete_videos(rows,url_del,payloads_del):
+    print('Start delete')
+
     for i in range(1,rows+1):
         id = xls_table.cell(row=i,column=1).value
-        payloads['video_id'] = id
-        print(payloads)
-        requests.get(url, params=payloads)
+        payloads_del['video_id'] = id
+        print(payloads_del)
+        del_result = requests.get(url_del, payloads_del).json()
+        print(del_result)
+
+    print('finished')
+
 
 run()
